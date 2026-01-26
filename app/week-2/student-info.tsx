@@ -3,11 +3,11 @@ import Link from 'next/link';
 export default function Page() {
   return (
     <div>
-      <p>Name: Aryan</p>
+      <p>Name: Mayur</p>
       <p>
         GitHub Link: 
-        <Link href="https://github.com/aryansaini-71">
-          https://github.com/aryansaini-71
+        <Link href="https://github.com/mayur-7603">
+          https://github.com/mayur-7603
         </Link>
       </p>
     </div>
