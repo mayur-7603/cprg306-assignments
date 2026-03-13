@@ -16,6 +16,8 @@ export default function Home() {
       <Link href="/week-6">Go to Week 6 Assignment</Link><br /> 
 
       <Link href="/week-7">Go to Week 7 Assignment</Link><br /> 
+
+      <Link href="/week-8">Go to Week 8 Assignment</Link><br /> 
       
       <p>
         Name: Mayur <br />
