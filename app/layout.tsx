@@ -1,17 +1,16 @@
-import { AuthContextProvider } from "./contexts/AuthContext";
 import "./globals.css";
+import { AuthContextProvider } from "./contexts/AuthContext";
+import { ReactNode } from "react";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className="bg-black text-white min-h-screen">
-        <AuthContextProvider>
-          {children}
-        </AuthContextProvider>
+      <body>
+        <AuthContextProvider>{children}</AuthContextProvider>
       </body>
     </html>
   );

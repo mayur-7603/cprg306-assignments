@@ -1,35 +1,44 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { auth } from "../utils/firebase";
 import {
+  GithubAuthProvider,
   signInWithPopup,
   signOut,
   onAuthStateChanged,
-  GithubAuthProvider,
 } from "firebase/auth";
-import { auth } from "../utils/firebase";
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  const gitHubSignIn = async () => {
-    const provider = new GithubAuthProvider();
-    return signInWithPopup(auth, provider);
-  };
-
-  const firebaseSignOut = async () => {
-    return signOut(auth);
-  };
-
+  // Prevent SSR crash
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    if (typeof window === "undefined" || !auth) return;
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
     });
 
     return () => unsubscribe();
   }, []);
+
+  // GitHub Login
+  async function gitHubSignIn() {
+    if (!auth) return;
+
+    const provider = new GithubAuthProvider();
+    return signInWithPopup(auth, provider);
+  }
+
+  // Logout
+  async function firebaseSignOut() {
+    if (!auth) return;
+
+    return signOut(auth);
+  }
 
   return (
     <AuthContext.Provider value={{ user, gitHubSignIn, firebaseSignOut }}>
@@ -38,6 +47,7 @@ export function AuthContextProvider({ children }) {
   );
 }
 
+// Custom Hook
 export function useUserAuth() {
   const context = useContext(AuthContext);
 

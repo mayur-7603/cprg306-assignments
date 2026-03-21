@@ -6,14 +6,24 @@ import { useUserAuth } from "../contexts/AuthContext";
 export default function Week9HomePage() {
   const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
 
+  async function handleLogin() {
+    try {
+      await gitHubSignIn();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <main className="p-6">
-      <h1 className="text-2xl font-bold mb-4">🔥 Week 9 Firebase Auth</h1>
+      <h1 className="text-2xl font-bold mb-4">
+         Week 9 Firebase Auth
+      </h1>
 
       {!user ? (
         <button
-          onClick={gitHubSignIn}
-          className="bg-white text-black px-4 py-2 rounded hover:bg-gray-300"
+          onClick={handleLogin}
+          className="bg-white text-black px-4 py-2 rounded"
         >
           Login with GitHub
         </button>
@@ -34,7 +44,7 @@ export default function Week9HomePage() {
 
           <button
             onClick={firebaseSignOut}
-            className="bg-red-500 px-4 py-2 rounded hover:bg-red-600"
+            className="bg-red-500 px-4 py-2 rounded"
           >
             Logout
           </button>

@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-// Firebase config using env variables
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -11,8 +10,13 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// ⚠️ Prevent server crash
+let app;
+let auth;
 
-// Export auth
-export const auth = getAuth(app);
+if (typeof window !== "undefined") {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+}
+
+export { auth };
